@@ -1,0 +1,4 @@
+pkg
+simh
+*.zst
+src
