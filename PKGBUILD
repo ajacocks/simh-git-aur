@@ -15,8 +15,6 @@ conflicts=("${pkgname%-*}")
 source=('git+https://github.com/simh/simh.git')
 sha512sums=('SKIP')
 
-_cpus=$( nproc )
-
 pkgver() {
   cd "${pkgname%-*}"
   printf "%s" "$(git describe --long --tags | sed 's/v//; s/-/./g')"
@@ -24,11 +22,7 @@ pkgver() {
 
 build() {
   cd "${pkgname%-*}"
-  if [ $_cpus -gt 1 ]; then
-    make -j $_cpus
-  else
-    make 
-  fi
+  { test "$(nproc)" -gt 1 && make -j"$(nproc)" ;} || make
 }
 
 package() {
@@ -36,20 +30,12 @@ package() {
   install -d "$pkgdir/usr/bin"
   cd "$srcdir/simh/BIN"
   for i in *; do
-    if [ -d "$i" ]; then
-      echo "Skipping directory $i."
-    else
-      install "$i" "$pkgdir/usr/bin/simh-$i"
-    fi
+    { test -d "$i" && echo "Skipping directory $i." ;} || install "$i" "$pkgdir/usr/bin/simh-$i"
   done
   cd "$srcdir/simh/BIN/buildtools"
   echo "Entering directory $srcdir/simh/BIN/buildtools."
   for i in *; do
-    if [ -d "$i" ]; then
-      echo "Skipping directory $i."
-    else
-      install "$i" "$pkgdir/usr/bin/simh-$i"
-    fi
+    { test -d "$i" && echo "Skipping directory $i." ;} || install "$i" "$pkgdir/usr/bin/simh-$i"
   done
 
   for dir in VAX swtp6800/swtp6800 3B2; do
@@ -71,5 +57,3 @@ package() {
   install -D -t "$pkgdir/usr/share/doc/$pkgname" *.md
   install -D -t "$pkgdir/usr/share/doc/$pkgname" *.txt
 }
-
-
