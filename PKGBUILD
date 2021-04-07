@@ -1,8 +1,8 @@
-# Maintainer: R. van Elst <https://raymii.org>
-# Contributor: Alexander Jacocks <alexander@redhat.com>
+# Maintainer: Alexander Jacocks <alexander@redhat.com>
+# Maintainer emeritus: R. van Elst <https://raymii.org>
 
 pkgname="simh-git"
-pkgver=4.0.Beta.1.2670.g3c1c92dc 
+pkgver=4.0.Beta.1.2670.g3c1c92dc
 pkgrel=2
 pkgdesc="The Computer History Simulation Project"
 arch=('i686' 'x86_64')
@@ -47,8 +47,9 @@ package() {
 
   echo "Entering directory $srcdir/simh/doc."
   cd "$srcdir/simh/doc"
-  unoconv -d document --format=txt *.doc
-  install -D -t "$pkgdir/usr/share/doc/$pkgname" *.doc
+  unoconv -d document --format=html *.doc
+  # install -D -t "$pkgdir/usr/share/doc/$pkgname" *.doc
+  install -D -t "$pkgdir/usr/share/doc/$pkgname" *.html
   install -D -t "$pkgdir/usr/share/doc/$pkgname" *.pdf
   install -D -t "$pkgdir/usr/share/doc/$pkgname" *.txt
 
