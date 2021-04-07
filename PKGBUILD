@@ -51,7 +51,7 @@ package() {
   # install -D -t "$pkgdir/usr/share/doc/$pkgname" *.doc
   install -D -t "$pkgdir/usr/share/doc/$pkgname" *.html
   install -D -t "$pkgdir/usr/share/doc/$pkgname" *.pdf
-  install -D -t "$pkgdir/usr/share/doc/$pkgname" *.txt
+  # install -D -t "$pkgdir/usr/share/doc/$pkgname" *.txt uncomment this only if you converted .doc to .txt
 
   echo "Entering directory $srcdir/simh."
   cd "$srcdir/simh"
