@@ -2,3 +2,4 @@ pkg
 simh
 *.zst
 src
+*.commit
